@@ -60,12 +60,14 @@ class UsersPublic(SQLModel):
 # Shared properties
 class ItemBase(SQLModel):
     title: str
+    name: str
     description: str | None = None
 
 
 # Properties to receive on item creation
 class ItemCreate(ItemBase):
     title: str
+    name: str
 
 
 # Properties to receive on item update
@@ -76,6 +78,7 @@ class ItemUpdate(ItemBase):
 # Database model, database table inferred from class name
 class Item(ItemBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
+    name: str
     title: str
     owner_id: int | None = Field(default=None, foreign_key="user.id", nullable=False)
     owner: User | None = Relationship(back_populates="items")
